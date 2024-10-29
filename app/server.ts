@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import mysql from 'mysql2/promise';
-import { getRoutes, getUserRoutes } from './routes/userRoutes';
+import { getUserRoutes } from './routes/userRoutes';
+import { getFileRoutes } from './routes/fileRoutes';
 import { auth } from "./middleware/auth"
 import { getRepositories } from "./repository/repository"
 
@@ -15,12 +16,12 @@ const database = await mysql.createConnection({
   database:  "file_manager",
 });
 const repositories = getRepositories(database)
-const routes = getRoutes(repositories)
 
 server.use(cors())
 server.use(express.json())
 
-server.use("/user", getUserRoutes())
+server.use("/user", getUserRoutes(repositories.userRepository))
+server.use("/file", getFileRoutes(repositories.fileRepository))
 
 server.use(auth)
 

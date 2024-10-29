@@ -1,5 +1,5 @@
 import { IRepository } from "../type/repository"
-import { Connection } from 'mysql2'
+import { Connection } from 'mysql2/promise'
 import { getFileRepository } from "./fileRepository"
 import { getUserRepository } from "./userRepository"
 

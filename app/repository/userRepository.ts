@@ -1,4 +1,4 @@
-import { Connection } from "mysql2";
+import { Connection } from "mysql2/promise";
 import { IUserRepository } from "./../type/userRepository";
 import { IUser } from "type/user";
 
@@ -6,10 +6,10 @@ export function getUserRepository(database: Connection): IUserRepository {
     return {
         getOneUser: async (email: string) => {
             const getoneUserQuery =
-                "SELECT user_id, email, password FROM users WHERE email = $1";
+                "SELECT user_id, email, password FROM users WHERE email = ?";
             try {
-                const [results, fields] = await database.query(getoneUserQuery, [email]);
-                const user: Array<IUser> = results.rows;
+                const [results] = await database.query(getoneUserQuery, [email]);
+                const user = results as Array<IUser>;
                 return user[0];
             } catch (e) {
                 console.log(process.env.PASSWORD);
@@ -18,10 +18,10 @@ export function getUserRepository(database: Connection): IUserRepository {
         }, 
         createUser: async (email: string, hashedPassword: string) => {
             const createUserQuery =
-                "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *";
+                "INSERT INTO users (email, password) VALUES (?, ?) RETURNING *";
             try {
-                const [results, fields] = await database.query(createUserQuery, [email, hashedPassword]);
-                const user: Array<IUser> = results.rows;
+                const [results] = await database.query(createUserQuery, [email, hashedPassword]);
+                const user = results as Array<IUser>;
                 return user[0];
             } catch (e) {
                 console.error(e + "Could not create user");

@@ -23,8 +23,8 @@ export const userController = {
     const user = await userRepository.createUser(email, hash);
 
     res.status(200).json({
-      userId: user.user_id,
-      token: jtw.sign({ userId: user.user_id }, `${KEY}`, {
+      userId: user?.user_id,
+      token: jtw.sign({ userId: user?.user_id }, `${KEY}`, {
         expiresIn: "24h",
       }),
     });
@@ -41,16 +41,20 @@ login: (userRepository: IUserRepository) => async (req: Request, res: Response, 
         .json("Missing parameter, request must include email and password");
     }
     const user = await userRepository.getOneUser(email);
-    const valid = bcrypt.compare(password, user.password);
-    if (!valid) {
-      res.status(401).json({ message: "Paire login/mot de passe incorrecte" });
+    if (!user) {
+      res.status(401).json({ message: "Something went wrong" });
+    } else {
+      const valid = bcrypt.compare(password, user.password);
+      if (!valid) {
+        res.status(401).json({ message: "Paire login/mot de passe incorrecte" });
+      }
+      res.status(201).json({
+        userId: user.user_id,
+        token: jtw.sign({ userId: user?.user_id }, `${KEY}`, {
+          expiresIn: "24h",
+        }),
+      });
     }
-    res.status(201).json({
-      userId: user.user_id,
-      token: jtw.sign({ userId: user.user_id }, `${KEY}`, {
-        expiresIn: "24h",
-      }),
-    });
   } catch (e) {
     res.status(400).json("Login failed");
   }
