@@ -44,5 +44,17 @@ export const fileController = {
             } catch (e) {
                 res.status(400);
             }
+        },
+    getUserFiles: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
+            try {
+                const fileRepository = repositories.fileRepository
+                const files = await fileRepository.getFilesByUserId(req.auth?.userId)
+                if (!files) {
+                    return res.status(404).json({ message: 'Files not found' });
+                }
+                res.status(200).json(files);
+            } catch (e) {
+                res.status(400);
+            }
         }
 }

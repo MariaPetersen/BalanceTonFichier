@@ -34,6 +34,17 @@ export function getFileRepository(database: Connection): IFileRepository {
             } catch (e) {
                 console.error(e + "Could not delete file");
             }
+        },
+        getFilesByUserId: async (userId: string) => {
+            const getFilesQuery =
+                "SELECT id, user_id, file_name, user_file_name, file_size, file_path FROM File WHERE user_id =?";
+            try {
+                const [results] = await database.query(getFilesQuery, [userId]);
+                const files = results as Array<IFile>;
+                return files;
+            } catch (e) {
+                console.error(e + "Could not retrieve files");
+            }
         }
     }
 }
