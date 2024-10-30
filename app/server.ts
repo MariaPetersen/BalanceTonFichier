@@ -7,7 +7,7 @@ import { auth } from "./middleware/auth"
 import { getRepositories } from "./repository/repository"
 
 const server = express();
-const port = 3000;
+const port = 3001;
 const database = await mysql.createConnection({
   host: process.env.DB_HOST,
   user:  process.env.DB_USER,

@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { IFileRepository } from '../type/fileRepository'
 import { fileController } from './../controller/fileController'
 import { auth } from './../middleware/auth'
 import { IRepository } from 'type/repository'

@@ -1,6 +1,6 @@
 import multer from "multer";
 import path from 'path';
-import { IAuthRequest } from "./../type/authRequest";
+import { IAuthRequest } from "../type/authRequest";
 import { IRepository } from "./../type/repository";
 
 const storage = multer.diskStorage({

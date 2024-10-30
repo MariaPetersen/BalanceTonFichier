@@ -1,0 +1,9 @@
+FROM node:23
+
+WORKDIR /
+
+COPY package.json package.json
+
+RUN npm install
+
+CMD ["npm", "run", "dev"]

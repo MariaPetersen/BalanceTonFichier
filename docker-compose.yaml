@@ -1,38 +1,41 @@
 services:
-  database:
-    image: mariadb:11
-    ports:
-      - "3309:3306"
-    volumes:
-      - ./init:/docker-entrypoint-initdb.d/
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: file_manager
-    healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      start_period: 5s
-      interval: 5s
-      timeout: 5s
-      retries: 3
+    database:
+        image: mariadb:11
+        ports:
+            - '3309:3306'
+        volumes:
+            - ./init:/docker-entrypoint-initdb.d/
+            - ./db-data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: file_manager
+        healthcheck:
+            test: ['CMD', 'healthcheck.sh', '--connect', '--innodb_initialized']
+            start_period: 5s
+            interval: 5s
+            timeout: 5s
+            retries: 3
 
-  express:
-    image: node:23
-    ports:
-      - "8090:3000"
-    volumes:
-      - ./app:/app
-    env_file:
-      - ./.env
-    command: sh -c "cd /app && npm install && npm run dev"
-    depends_on:
-      database:
-        condition: service_healthy
+    express:
+        ports:
+            - '8090:3001'
+        volumes:
+            - ./app:/app
+        env_file:
+            - ./.env
+        build:
+            context: ./app
+            dockerfile: Dockerfile
+        depends_on:
+            database:
+                condition: service_healthy
 
-  react:
-    image: node:23
-    ports:
-      - "3001:3000"
-    volumes:
-      - ./frontend:/frontend
-    working_dir: /frontend
-    command: 'sh -c "npm i && npm start"'
+    react:
+        image: node:23
+        ports:
+            - '3001:3000'
+        volumes:
+            - ./frontend:/frontend
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile

@@ -23,7 +23,6 @@ export const fileController = {
                 await archive.finalize();
                 fs.unlinkSync(tempFilePath);
                 const fileRepository = repositories.fileRepository
-                console.log(req.file.size)
                 const file = await fileRepository.createFile(internalFileName, req.file.originalname, req.file.size, zipFilePath, req.auth?.userId)
                 res.status(200).json(file)
             } catch (e) {
