@@ -7,7 +7,7 @@ import { auth } from "./middleware/auth"
 import { getRepositories } from "./repository/repository"
 
 const server = express();
-const port = 3000;
+const port = 3001;
 const database = await mysql.createConnection({
   host: process.env.DB_HOST,
   user:  process.env.DB_USER,
@@ -19,9 +19,10 @@ const repositories = getRepositories(database)
 
 server.use(cors())
 server.use(express.json())
+server.use(express.static("./private"))
 
 server.use("/user", getUserRoutes(repositories.userRepository))
-server.use("/file", getFileRoutes(repositories.fileRepository))
+server.use("/file", getFileRoutes(repositories))
 
 // server.use(auth)
 

@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { IAuthRequest } from "./../type/authRequest";
+import { IAuthRequest } from "../type/authRequest";
 import { IUserToken } from "./../type/userToken";
 import jtw from "jsonwebtoken";
 
