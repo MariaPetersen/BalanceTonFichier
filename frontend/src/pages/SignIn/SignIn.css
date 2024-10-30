@@ -9,7 +9,21 @@
 
 .signIn .half {
   flex: 1;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.log {
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  padding: 0 20%;
+}
+
+.signIn__title {
+  font-size: 24px;
+  margin-bottom: 80px;
 }
