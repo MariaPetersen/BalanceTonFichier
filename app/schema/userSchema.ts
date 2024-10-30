@@ -1,5 +1,5 @@
 export const userSchema = {
-    username: {
+    email: {
         exists: true,
         notEmpty: true,
         escape: true

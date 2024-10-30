@@ -23,7 +23,7 @@ server.use(express.json())
 server.use("/user", getUserRoutes(repositories.userRepository))
 server.use("/file", getFileRoutes(repositories.fileRepository))
 
-server.use(auth)
+// server.use(auth)
 
 server.listen(port, () => console.log("Server is listening on port " + port))
 

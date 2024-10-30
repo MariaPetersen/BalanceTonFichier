@@ -23,8 +23,8 @@ export const userController = {
     const user = await userRepository.createUser(email, hash);
 
     res.status(200).json({
-      userId: user?.user_id,
-      token: jtw.sign({ userId: user?.user_id }, `${KEY}`, {
+      userId: user?.id,
+      token: jtw.sign({ userId: user?.id }, `${KEY}`, {
         expiresIn: "24h",
       }),
     });
@@ -49,8 +49,8 @@ login: (userRepository: IUserRepository) => async (req: Request, res: Response, 
         res.status(401).json({ message: "Paire login/mot de passe incorrecte" });
       }
       res.status(201).json({
-        userId: user.user_id,
-        token: jtw.sign({ userId: user?.user_id }, `${KEY}`, {
+        userId: user.id,
+        token: jtw.sign({ userId: user?.id }, `${KEY}`, {
           expiresIn: "24h",
         }),
       });
