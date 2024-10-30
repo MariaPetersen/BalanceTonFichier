@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import MainLayout from "../../layouts/MainLayout/MainLayout";
 import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
 
 import "./SignIn.css";
 
@@ -20,6 +21,14 @@ export default function SignIn() {
   // eslint-disable-next-line no-undef
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    setTimeout(() => setLoading(false), 2000);
+  };
+
   return (
     <div className="signIn">
       <div className="half">
@@ -42,10 +51,15 @@ export default function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <p>
-            Vous n’avez pas de compte ? Créez-en un <Link to="/signup">ici</Link>
-            .
+          <p className="no__account">
+            Vous n’avez pas de compte ? Créez-en un{" "}
+            <Link to="/signup">ici</Link>.
           </p>
+          <Button
+            label="Se connecter à BalanceTonFichier"
+            onClick={handleClick}
+            loading={loading}
+          />
         </div>
       </div>
     </div>
