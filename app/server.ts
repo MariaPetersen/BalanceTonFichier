@@ -19,9 +19,10 @@ const repositories = getRepositories(database)
 
 server.use(cors())
 server.use(express.json())
+server.use(express.static("./private"))
 
 server.use("/user", getUserRoutes(repositories.userRepository))
-server.use("/file", getFileRoutes(repositories.fileRepository))
+server.use("/file", getFileRoutes(repositories))
 
 // server.use(auth)
 

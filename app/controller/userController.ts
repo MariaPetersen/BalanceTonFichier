@@ -14,7 +14,7 @@ export const userController = {
         .status(400)
         .json("Missing parameter, request must include email and password");
     }
-    const alreadyExistingUser = await userRepository.getOneUser(email);
+    const alreadyExistingUser = await userRepository.getOneUserByEmail(email);
 
     if (alreadyExistingUser) {
       res.status(400).json("Something went wrong during signup");
@@ -40,7 +40,7 @@ login: (userRepository: IUserRepository) => async (req: Request, res: Response, 
         .status(400)
         .json("Missing parameter, request must include email and password");
     }
-    const user = await userRepository.getOneUser(email);
+    const user = await userRepository.getOneUserByEmail(email);
     if (!user) {
       res.status(401).json({ message: "Something went wrong" });
     } else {

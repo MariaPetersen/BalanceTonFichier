@@ -4,7 +4,7 @@ import { IUser } from "type/user";
 
 export function getUserRepository(database: Connection): IUserRepository {
     return {
-        getOneUser: async (email: string) => {
+        getOneUserByEmail: async (email: string) => {
             const getoneUserQuery =
                 "SELECT id, email, password FROM User WHERE email = ?";
             try {
@@ -12,7 +12,18 @@ export function getUserRepository(database: Connection): IUserRepository {
                 const user = results as Array<IUser>;
                 return user[0];
             } catch (e) {
-                console.log(process.env.PASSWORD);
+                console.error(e + "Could not retrieve user");
+            }
+        }, 
+        getOneUserById: async (id: string) => {
+            const getoneUserQuery =
+                "SELECT id, email, password FROM User WHERE id = ?";
+            try {
+                const [results] = await database.query(getoneUserQuery, [id]);
+                const user = results as Array<IUser>;
+                console.log(user);
+                return user[0];
+            } catch (e) {
                 console.error(e + "Could not retrieve user");
             }
         }, 
