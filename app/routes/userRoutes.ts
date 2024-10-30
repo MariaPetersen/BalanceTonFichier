@@ -7,6 +7,7 @@ import { IUserRepository } from '../type/userRepository'
 export function getUserRoutes(userRepository: IUserRepository): Router {
     const router = Router()
     router.post('/signup', checkSchema(userSchema), userController.signup(userRepository))
+    router.post('/login', checkSchema(userSchema), userController.login(userRepository))
 
     // router.get('/:id(\\d+)', getOne(app))
 
