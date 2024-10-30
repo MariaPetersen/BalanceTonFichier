@@ -26,6 +26,19 @@ export function getFileRepository(database: Connection): IFileRepository {
                 console.error(e + "Could not retrieve file");
             }
         },
+        getFilesByIds: async (filesIds: string[]) => {
+            const getFilesQuery =
+                `SELECT file_path, user_file_name FROM File WHERE id IN (${filesIds.join(',')})`;
+            try {
+                console.log(getFilesQuery);  // for debugging purposes, remove before production
+                const [results] = await database.query(getFilesQuery);
+                console.log(results);
+                const files = results as Array<IFile>;
+                return files;
+            } catch (e) {
+                console.error(e + "Could not retrieve files");
+            }
+        },
         deleteFile: async (fileId: string) => {
             const deleteFileQuery =
                 "DELETE FROM File WHERE id =?";
