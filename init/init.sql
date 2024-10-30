@@ -25,9 +25,9 @@ CREATE TABLE File (
 
 CREATE TABLE ShareLink (
     id BIGINT(20) NOT NULL AUTO_INCREMENT,
-    file_id BIGINT(20) NOT NULL,
+    user_id BIGINT(20) NOT NULL,
     link VARCHAR(255) NOT NULL,
     expiration_date DATETIME NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (file_id) REFERENCES File(id)
+    FOREIGN KEY (user_id) REFERENCES User(id)
 )

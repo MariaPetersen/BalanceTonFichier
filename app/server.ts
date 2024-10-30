@@ -3,6 +3,7 @@ import cors from 'cors';
 import mysql from 'mysql2/promise';
 import { getUserRoutes } from './routes/userRoutes';
 import { getFileRoutes } from './routes/fileRoutes';
+import { getShareLinkRoutes } from './routes/shareLinkRoutes';
 import { auth } from "./middleware/auth"
 import { getRepositories } from "./repository/repository"
 
@@ -23,6 +24,7 @@ server.use(express.static("./private"))
 
 server.use("/user", getUserRoutes(repositories.userRepository))
 server.use("/file", getFileRoutes(repositories))
+server.use("/shareLink", getShareLinkRoutes(repositories))
 
 // server.use(auth)
 
