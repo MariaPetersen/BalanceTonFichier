@@ -1,0 +1,23 @@
+.errorPage {
+  background-image: url("../../assets/error_background.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.errorPage__title {
+  font-size: 120px;
+  margin-top: -50px;
+  letter-spacing: -5px;
+}
+
+.errorPage__title2 {
+  font-family: "Questrial", sans-serif;
+  font-size: 32px;
+}
