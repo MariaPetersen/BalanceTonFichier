@@ -27,10 +27,9 @@ p {
 }
 
 a {
-  color: green;
-  text-decoration: none;
+  color: black;
 }
 
 a:hover {
-  text-decoration: underline;
+  cursor: pointer;
 }
