@@ -1,0 +1,30 @@
+.homepage {
+    display: flex;
+    margin-top: 8rem;
+    flex-direction: column;
+    text-align: center;
+}
+
+.homepage h1 {
+    font-size: 48px;
+    margin-bottom: 0;
+}
+
+.homepage h4 {
+    font-weight: 300;
+    font-size: 20px;
+    margin-bottom: 8rem;
+}
+
+.homepage .dropfile-logo {
+    width: 254px;
+}
+
+.info-dropfile {
+    font-size: 16px;
+}
+
+.arrow-info-dropfile {
+    margin-bottom: 0.2rem;
+    margin-top: 0.4rem;
+}
