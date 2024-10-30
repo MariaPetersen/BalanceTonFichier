@@ -9,5 +9,6 @@ export function getFileRoutes(repositories: IRepository) {
     const upload = multer({ dest: 'temp/' });
     const router = Router()
     router.post("/upload", auth, upload.single("file"), fileController.uploadFile(repositories))
+    router.delete("/delete/:id", auth, fileController.deleteFile(repositories))
     return router
 }

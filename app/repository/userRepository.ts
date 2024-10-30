@@ -21,7 +21,6 @@ export function getUserRepository(database: Connection): IUserRepository {
             try {
                 const [results] = await database.query(getoneUserQuery, [id]);
                 const user = results as Array<IUser>;
-                console.log(user);
                 return user[0];
             } catch (e) {
                 console.error(e + "Could not retrieve user");

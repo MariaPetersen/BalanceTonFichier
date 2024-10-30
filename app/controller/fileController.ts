@@ -29,5 +29,20 @@ export const fileController = {
                 res.status(400);
             }
             }
+        },
+    deleteFile: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
+            try {
+                const fileRepository = repositories.fileRepository
+                const file = await fileRepository.getFileById(req.params.id)
+                console.log(file)
+                if (!file || file.user_id!== req.auth?.userId) {
+                    return res.status(404).json({ message: 'File not found or not owned by user' });
+                }
+                fs.unlinkSync(file.file_path)
+                await fileRepository.deleteFile(req.params.id)
+                res.status(200).json({ message: 'File deleted successfully' });
+            } catch (e) {
+                res.status(400);
+            }
         }
 }
