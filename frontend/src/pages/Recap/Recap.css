@@ -1,0 +1,6 @@
+.recap {
+    display: flex;
+    margin-top: 8rem;
+    flex-direction: column;
+    text-align: center;
+}
