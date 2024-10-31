@@ -61,4 +61,19 @@ export const shareLinkController = {
                 res.status(400);
             }
         },
+    getOneShareLink: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
+        try {
+            const shareLinkRepository = repositories.shareLinkRepository
+            const id = req.params.id
+            const shareLink = await shareLinkRepository.getShareLink(id)
+            if (!shareLink) {
+                res.status(404).json({ message: 'Share link not found' });
+                return;
+            }
+            console.log(shareLink)
+            res.status(200).json(shareLink);
+            } catch (e) {
+                res.status(400);
+            }
+    }
 }

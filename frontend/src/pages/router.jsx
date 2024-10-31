@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/download",
+    path: "/download/:id",
     element: <PrivateRoute element={<Download />} />,
     errorElement: <Error />,
   },

@@ -1,22 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Recap.css";
+import useApi from "../../hooks/useApi";
 
 export default function Recap() {
     const [files, setFiles] = useState([]);
     const navigate = useNavigate();
+    const { fetchData, uploadFile } = useApi();
 
-    const handleFileChange = (event) => {
+    const fetchFiles = useCallback(async () => {
+        const response = await fetchData("/file/userFiles", "GET", {}, true);
+        setFiles(response);
+    }, []);
+
+    const uploadNewFile = useCallback(
+        async (file) => {
+            uploadFile("/file/upload", file, true).then((response) => {
+                fetchFiles();
+            });
+        },
+        [files]
+    );
+
+    useEffect(() => {
+        const fetch = async () => {
+            await fetchFiles();
+        };
+        fetch();
+    }, [fetchFiles]);
+
+    const handleFileChange = async (event) => {
         const newFiles = Array.from(event.target.files);
-        setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+        newFiles.forEach((file) => uploadNewFile(file));
     };
 
-    const handleRemoveFile = (index) => {
-        setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    const handleRemoveFile = async (fileId) => {
+        fetchData(`/file/delete/${fileId}`, "DELETE", {}, true).then(
+            (response) => {
+                fetchFiles();
+            }
+        );
     };
 
-    const handleGenerateLink = () => {
-        navigate("/download");
+    const handleGenerateLink = async () => {
+        fetchData(`/shareLink/create`, "POST", {}, true).then((link) => {
+            navigate(`/download/${link.id}`);
+        });
     };
 
     const formatFileSize = (size) => {
@@ -28,6 +57,8 @@ export default function Recap() {
             return `${size} octets`;
         }
     };
+
+    console.log(files);
 
     return (
         <div className="recap-page">
@@ -46,13 +77,13 @@ export default function Recap() {
                 <div className="file-list">
                     {files.map((file, index) => (
                         <div className="file-item" key={index}>
-                            <div className="wrap-file-name">
-                                <span>{file.name}</span>
-                                <span>{formatFileSize(file.size)}</span>
-                            </div>
+                            <span className="file-name">
+                                {file.user_file_name}
+                            </span>
+                            <span>{formatFileSize(file.file_size)}</span>
                             <button
                                 className="remove-file-button"
-                                onClick={() => handleRemoveFile(index)}
+                                onClick={() => handleRemoveFile(file.id)}
                             >
                                 ×
                             </button>
@@ -62,6 +93,7 @@ export default function Recap() {
                 <button
                     className="generate-link-button"
                     onClick={handleGenerateLink}
+                    disabled={files.length === 0}
                 >
                     Générer un lien*
                 </button>
