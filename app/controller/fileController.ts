@@ -7,10 +7,17 @@ import fs from 'fs';
 export const fileController = {
     uploadFile: (repositories: IRepository) => {
         return async (req: IAuthRequest, res: Response, next: NextFunction) => {
+            console.log(req.file)
             if (!req.file) {
                 return res.status(400).json({ message: 'No file uploaded' });
             }
             try {
+                const userRepository = repositories.userRepository
+                const user = await userRepository.getOneUserById(req.auth?.userId);
+                const remainingSpace = 2e+9 - user.occupied_space //in octets
+                if (remainingSpace < req.file.size) {
+                    res.status(413).json({error: "Insufficient space on the server"})
+                } 
                 const tempFilePath = req.file.path;
                 const internalFileName = req.file.originalname + '-' + Date.now() + '-' + Math.round(Math.random() * 1E9);
                 const zipFilePath = `uploads/${internalFileName}.zip`
@@ -34,7 +41,6 @@ export const fileController = {
             try {
                 const fileRepository = repositories.fileRepository
                 const file = await fileRepository.getFileById(req.params.id)
-                console.log(file)
                 if (!file || file.user_id!== req.auth?.userId) {
                     return res.status(404).json({ message: 'File not found or not owned by user' });
                 }
