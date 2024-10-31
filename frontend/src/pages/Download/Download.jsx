@@ -1,12 +1,26 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Download.css";
+import useApi from "../../hooks/useApi";
 
 export default function Recap() {
     const navigate = useNavigate();
+    const {id} = useParams()
+    const { fetchData } = useApi()
+    const [link, setLink] = useState()
 
-    const handleGenerateLink = () => {
-        navigate("/download");
+    useEffect(() => {
+        const fetchLink = async () => {
+            fetchData(`/shareLink/${id}`, "GET", {}, true).then((link) => {
+                console.log(link)
+                setLink(link)
+            })
+        }
+        fetchLink()
+    }, [])
+
+    const returnToFiles = () => {
+        navigate("/recap");
     };
 
     return (
@@ -25,9 +39,9 @@ export default function Recap() {
                     <div className="resume-download">
                         <div className="download-link-section">
                             <div>Lien de téléchargement</div>
-                            <a href="#">
-                                https://liendetechargement.com/3298hahe92hdiqs2aoizyriueqhsdifhshio
-                            </a>
+                            {link && <a href={link.link} target="__blank">
+                                {link.link}
+                            </a>}
                         </div>
                         <div>
                             <button>
@@ -37,9 +51,9 @@ export default function Recap() {
                     </div>
                     <button
                         className="generate-link-button other-button"
-                        onClick={handleGenerateLink}
+                        onClick={returnToFiles}
                     >
-                        Créer un autre transfert
+                        Retourner sur mes fichiers
                     </button>
                 </div>
             </div>
