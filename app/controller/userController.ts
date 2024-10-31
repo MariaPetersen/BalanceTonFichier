@@ -31,7 +31,7 @@ export const userController = {
       }),
     });
   } catch (e) {
-    res.status(400);
+    res.status(500);
   }
 }, 
   login: (userRepository: IUserRepository) => async (req: Request, res: Response, next: NextFunction) => {
@@ -61,7 +61,7 @@ export const userController = {
         });
       }
     } catch (e) {
-      res.status(400).json("Login failed");
+      res.status(500).json("Login failed");
     }
   }
 }

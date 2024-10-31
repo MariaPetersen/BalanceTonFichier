@@ -1,6 +1,5 @@
 import { Response, NextFunction } from "express";
 import { IAuthRequest } from "type/authRequest";
-import { IFile } from "type/file";
 import { IRepository } from "type/repository";
 import jtw from "jsonwebtoken";
 import { IUserToken } from "type/userToken";
@@ -26,7 +25,7 @@ export const shareLinkController = {
             const savedLink = await shareLinkRepository.createShareLink(shareLink, expirationDate, req.auth?.userId)
             res.status(200).json(savedLink);
             } catch (e) {
-                res.status(400);
+                res.status(500);
             }
         },
     downloadFiles: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
@@ -66,7 +65,7 @@ export const shareLinkController = {
                 res.status(500).send({ error: err.message });
             });
             } catch (e) {
-                res.status(400);
+                res.status(500);
             }
         },
     getOneShareLink: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
@@ -81,7 +80,7 @@ export const shareLinkController = {
             console.log(shareLink)
             res.status(200).json(shareLink);
             } catch (e) {
-                res.status(400);
+                res.status(500);
             }
     }
 }

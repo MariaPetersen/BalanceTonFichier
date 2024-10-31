@@ -5,8 +5,12 @@ import { constants } from "./../utils/constants";
 import { createZipFile } from "./../utils/helper"
 import fs from 'fs';
 
+interface IFileRequest {
+    file: Express.Multer.File;
+}
+
 export const fileController = {
-    uploadFile: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
+    uploadFile: (repositories: IRepository) => async (req: IAuthRequest & IFileRequest, res: Response, next: NextFunction) => {
             if (!req.file) {
                 res.status(400).json({ message: 'No file uploaded' });
                 return;
@@ -25,7 +29,7 @@ export const fileController = {
                 const file = await fileRepository.createFile(zipFile.name, req.file.originalname, req.file.size, zipFile.path, req.auth?.userId)
                 res.status(200).json(file)
             } catch (e) {
-                res.status(400);
+                res.status(500);
             }
         },
     deleteFile: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
@@ -40,7 +44,7 @@ export const fileController = {
                 await fileRepository.deleteFile(req.params.id)
                 res.status(200).json({ message: 'File deleted successfully' });
             } catch (e) {
-                res.status(400);
+                res.status(500);
             }
         },
     getUserFiles: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
@@ -53,7 +57,7 @@ export const fileController = {
                 }
                 res.status(200).json(files);
             } catch (e) {
-                res.status(400);
+                res.status(500);
             }
         }
 }
