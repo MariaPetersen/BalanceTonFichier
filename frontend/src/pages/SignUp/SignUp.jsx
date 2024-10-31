@@ -23,7 +23,7 @@ export default function SignUp() {
 
   const handleClick = async () => {
     try {
-      await fetchData("/signup", "POST", { email, password });
+      await fetchData("/user/signup", "POST", { email, password });
       navigate("/signin");
     } catch (error) {
       console.error("Erreur lors de l'inscription :", error);
