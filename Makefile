@@ -9,3 +9,7 @@ bash-express:
 # To enter React container
 bash-react:
 	docker exec -it balancetonfichier-react-1 bash
+
+# To start project
+start:
+	docker-compose up --build
