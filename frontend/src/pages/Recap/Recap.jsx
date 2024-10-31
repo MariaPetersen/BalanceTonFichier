@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Recap.css";
 
 export default function Recap() {
     const [files, setFiles] = useState([]);
+    const navigate = useNavigate();
 
     const handleFileChange = (event) => {
         const newFiles = Array.from(event.target.files);
@@ -11,6 +13,10 @@ export default function Recap() {
 
     const handleRemoveFile = (index) => {
         setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    };
+
+    const handleGenerateLink = () => {
+        navigate("/download");
     };
 
     const formatFileSize = (size) => {
@@ -45,7 +51,10 @@ export default function Recap() {
                         </div>
                     ))}
                 </div>
-                <button className="generate-link-button">
+                <button
+                    className="generate-link-button"
+                    onClick={handleGenerateLink}
+                >
                     Générer un lien*
                 </button>
                 <p className="link-validity">

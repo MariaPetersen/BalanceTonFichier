@@ -1,0 +1,72 @@
+.download-page {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8rem;
+    align-items: center;
+}
+
+.download-page h4 {
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.download-container {
+    margin-top: 2rem;
+    border: 2px solid #e3008c;
+    padding: 1.5rem 2rem;
+    border-radius: 21px;
+    width: 463px;
+    margin-top: 4rem;
+}
+
+.top-download {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.resume-download {
+    border: 1px solid #ededed;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.resume-download a {
+    font-size: 12px;
+}
+
+.resume-download i {
+    font-size: 21px;
+}
+
+.resume-download button {
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.download-link-section {
+    display: flex;
+    flex-direction: column;
+    gap: -0.5rem;
+}
+
+.download-link-section a {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 300px;
+}
+
+.other-button {
+    margin-top: 4rem;
+}
