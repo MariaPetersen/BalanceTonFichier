@@ -3,11 +3,10 @@ import { fileController } from './../controller/fileController'
 import { auth } from './../middleware/auth'
 import { IRepository } from 'type/repository'
 import {fileValidator} from '../validators/fileValidator'
-import multer from 'multer'
+import { upload } from './../middleware/multer'
 
 
 export function getFileRoutes(repositories: IRepository) {
-    const upload = multer({ dest: 'temp/' });
     const router = Router()
     router.post("/upload", auth, upload.single("file"), fileValidator, fileController.uploadFile(repositories))
     router.delete("/delete/:id", auth, fileController.deleteFile(repositories))

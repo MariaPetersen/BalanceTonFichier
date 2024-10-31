@@ -9,11 +9,10 @@ export async function createZipFile(tempFilePath: string, originalName: string):
     const internalFileName = `${originalName}-${Date.now()}-${Math.round(Math.random() * 1E9)}`;
     const zipFilePath = `uploads/${internalFileName}.zip`;
     const output = fs.createWriteStream(zipFilePath);
-    const archive = archiver('zip', { zlib: { level: 9 } });
+    const archive = archiver('zip');
     archive.pipe(output);
     archive.file(tempFilePath, { name: originalName });
-    await archive.finalize();
-    fs.unlinkSync(tempFilePath);
+    archive.finalize().then(() => {fs.unlinkSync(tempFilePath);})
     return {path: zipFilePath, name: internalFileName};
 }
 

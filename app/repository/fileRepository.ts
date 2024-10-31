@@ -30,8 +30,6 @@ export function getFileRepository(database: Connection): IFileRepository {
             const getFilesQuery =
                 `SELECT file_path, user_file_name FROM File WHERE id IN (${filesIds.join(',')})`;
             try {
-
-                console.log(filesIds)
                 const [results] = await database.query(getFilesQuery);
                 const files = results as Array<IFile>;
                 return files;
