@@ -96,7 +96,7 @@ export default function Recap() {
                     className={
                         files.length === 0
                             ? `generate-link-button disabled`
-                            : `generate-link-button`
+                            : `generate-link-button `
                     }
                     onClick={handleGenerateLink}
                     disabled={files.length === 0}
