@@ -9,7 +9,7 @@ export function getFileRepository(database: Connection): IFileRepository {
                 "INSERT INTO File (user_id, file_name, user_file_name, file_size, file_path) VALUES (?, ?, ?, ?, ?) RETURNING id, user_id, file_name, user_file_name, file_size, file_path";
             try {
                 const [results] = await database.query(createFileQuery, [userId, internalFileName, userFileName, fileSize, filePath]);
-                const file = results as IFile;
+                const file = results as unknown as IFile;
                 return file;
             } catch (e) {
                 console.error(e + "Could not save file");
@@ -30,9 +30,9 @@ export function getFileRepository(database: Connection): IFileRepository {
             const getFilesQuery =
                 `SELECT file_path, user_file_name FROM File WHERE id IN (${filesIds.join(',')})`;
             try {
-                console.log(getFilesQuery);  // for debugging purposes, remove before production
+
+                console.log(filesIds)
                 const [results] = await database.query(getFilesQuery);
-                console.log(results);
                 const files = results as Array<IFile>;
                 return files;
             } catch (e) {

@@ -1,27 +1,26 @@
 import { Response, NextFunction } from "express";
-import { IAuthRequest } from "./../type/authRequest";
-import { IRepository } from "./../type/repository";
+import { IAuthRequest } from "type/authRequest";
+import { IFile } from "type/file";
+import { IRepository } from "type/repository";
 import jtw from "jsonwebtoken";
 import { IUserToken } from "type/userToken";
 import archiver from "archiver";
+import { verifyAndFetchFiles, generateShareLink } from "utils/helper";
+import { constants } from "utils/constants";
 
 export const shareLinkController = {
     createShareLink: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
         try {
-            const fileRepository = repositories.fileRepository
-            const shareLinkRepository = repositories.shareLinkRepository
-            const files = await fileRepository.getFilesByUserId(req.auth?.userId)
-            if (!files) {
-                return res.status(404).json({ message: 'Files not found' });
-            }
-            const filesIds = files.map(file => file.id)
+            const {fileRepository, shareLinkRepository} = repositories
+            const userId = req.auth?.userId;
+            const filesIds = userId && await verifyAndFetchFiles(fileRepository, userId)
             const token = jtw.sign({ filesIds: filesIds }, `${process.env.RANDOM_KEY}`, {
-                expiresIn: "7d",
+                expiresIn: constants.DOWNLOAD_TOKEN_EXPIRATION,
             })
             const decodedToken = jtw.verify(token, `${process.env.RANDOM_KEY}`) as IUserToken
             const expirationDate = decodedToken?.exp && new Date(decodedToken?.exp * 1000)
     
-            const shareLink = `http://localhost:8090/shareLink/download/${token}`
+            const shareLink = generateShareLink(token)
             
             const savedLink = await shareLinkRepository.createShareLink(shareLink, expirationDate, req.auth?.userId)
             res.status(200).json(savedLink);
@@ -33,19 +32,25 @@ export const shareLinkController = {
         try {
             const fileRepository = repositories.fileRepository
             const token = req.params.token
-            const { filesIds, exp } = jtw.verify(token, `${process.env.RANDOM_KEY}`) as IUserToken
+            const decodedToken = jtw.verify(token, `${process.env.RANDOM_KEY}`) as IUserToken
+            const { filesIds, exp } = decodedToken 
             if (!filesIds?.length || !exp) {
-                return res.status(404).json({ message: 'Files not found' });
+                res.status(404).json({ message: 'Files not found' });
+                return;
             }
             if (exp > new Date().getTime()){
-                return res.status(403).json({ message: 'Link expired' });
+                res.status(403).json({ message: 'Link expired' });
+                return;
             }
             res.setHeader('Content-Type', 'application/zip');
             res.setHeader('Content-Disposition', 'attachment; filename="files.zip"');
             const archive = archiver('zip', { zlib: { level: 9 } });
             archive.pipe(res);
             const files = await fileRepository.getFilesByIds(filesIds)
-            files.forEach((file) => {
+            if (files.length === 0) {
+                res.status(404).json({ message: "No files found for download" });
+            }
+            files.forEach((file: IFile) => {
                 archive.file(file.file_path, { name: file.user_file_name });
             });
             archive.finalize();
