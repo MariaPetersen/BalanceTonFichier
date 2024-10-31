@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import SignIn from "./SignIn/SignIn";
 import SignUp from "./SignUp/SignUp";
@@ -7,10 +7,18 @@ import Recap from "./Recap/Recap";
 import Download from "./Download/Download";
 import Error from "./Error/Error";
 
+const isAuthenticated = () => {
+  return localStorage.getItem("token") !== null;
+};
+
+const PrivateRoute = ({ element }) => {
+  return isAuthenticated() ? element : <Navigate to="/signIn" />;
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <PrivateRoute element={<Home />} />,
     errorElement: <Error />,
   },
   {
@@ -25,12 +33,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/recap",
-    element: <Recap />,
+    element: <PrivateRoute element={<Recap />} />,
     errorElement: <Error />,
   },
   {
     path: "/download",
-    element: <Download />,
+    element: <PrivateRoute element={<Download />} />,
     errorElement: <Error />,
   },
 ]);
