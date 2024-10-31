@@ -7,7 +7,6 @@ import fs from 'fs';
 export const fileController = {
     uploadFile: (repositories: IRepository) => {
         return async (req: IAuthRequest, res: Response, next: NextFunction) => {
-            console.log(req.file)
             if (!req.file) {
                 return res.status(400).json({ message: 'No file uploaded' });
             }

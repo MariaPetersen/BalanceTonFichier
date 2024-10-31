@@ -12,6 +12,10 @@ export const auth = (req: IAuthRequest, res: Response, next: NextFunction) => {
       } else {
         const decodedToken = jtw.verify(token, `${process.env.RANDOM_KEY}`) as IUserToken
         const userId = decodedToken.userId;
+        if (!userId) {
+          res.status(403).json({ error: "Invalid token"})
+          return;
+        }
         req.auth = {
           userId: userId,
         };
