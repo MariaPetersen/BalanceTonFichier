@@ -23,8 +23,15 @@ export default function SignUp() {
 
   const handleClick = async () => {
     try {
-      await fetchData("/user/signup", "POST", { email, password });
-      navigate("/signin");
+      const result = await fetchData("/user/signup", "POST", { email, password });
+      if (result && result.token) {
+            const token = result.token;
+            console.log(token, "token");
+            localStorage.setItem("token", token);
+            navigate("/");
+        } else {
+            console.error("Token manquant dans la réponse du serveur.");
+        }
     } catch (error) {
       console.error("Erreur lors de l'inscription :", error);
     }
