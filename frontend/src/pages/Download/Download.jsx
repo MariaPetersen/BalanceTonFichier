@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./Download.css";
 import useApi from "../../hooks/useApi";
+import LogoutButton from "../../components/LogoutButton/LogoutButton"; // Importer le LogoutButton
 
 export default function Recap() {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ export default function Recap() {
 
     return (
         <div className="download-page">
+            <LogoutButton />
             <img src="/logo.svg" alt="logo" />
             <div className="download-container">
                 <div className="top-download">

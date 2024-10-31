@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Recap.css";
 import useApi from "../../hooks/useApi";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
 
 export default function Recap() {
     const [files, setFiles] = useState([]);
@@ -62,6 +63,7 @@ export default function Recap() {
 
     return (
         <div className="recap-page">
+            <LogoutButton />
             <img src="/logo.svg" alt="logo" />
             <div className="file-upload-container">
                 <h2>1. Mes chargements</h2>

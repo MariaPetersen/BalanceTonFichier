@@ -2,10 +2,11 @@ import React, { useRef } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
 export default function Home() {
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
-    const { loading, uploadFile } = useApi();
+    const { uploadFile } = useApi();
 
     const handleClick = () => {
         fileInputRef.current.click();
@@ -30,6 +31,7 @@ export default function Home() {
 
     return (
         <div className="homepage">
+            <LogoutButton />
             <div className="wrap-content">
                 <img src="/logo.svg" alt="logo" />
                 <h1>Envoyez vos fichiers jusqu'à 2 Go</h1>
