@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
+import useApi from "../../hooks/useApi";
 
 import MainLayout from "../../layouts/MainLayout/MainLayout";
 import Input from "../../components/Input/Input";
@@ -17,13 +18,18 @@ export default function SignUp() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { loading, fetchData } = useApi();
 
-  const [loading, setLoading] = useState(false);
-
-  const handleClick = () => {
-    setLoading(true);
-    setTimeout(() => setLoading(false), 2000);
+  const handleClick = async () => {
+    try {
+      await fetchData("/signup", "POST", { email, password });
+      navigate("/signin");
+    } catch (error) {
+      console.error("Erreur lors de l'inscription :", error);
+    }
   };
+
   return (
     <div className="signIn">
       <div className="half">
