@@ -1,4 +1,3 @@
-// useApi.js
 import { useState } from "react";
 import axios from "axios";
 
@@ -13,7 +12,7 @@ export default function useApi() {
         endpoint,
         method = "GET",
         body = null,
-        withAuthorization = false
+        withAuthorization
     ) => {
         setLoading(true);
         try {
@@ -31,6 +30,7 @@ export default function useApi() {
             });
             setData(response.data);
             setError(null);
+            console.log(response.data);
             return response.data;
         } catch (err) {
             setError(err);
@@ -57,29 +57,21 @@ export default function useApi() {
                 method: "POST",
                 url: `${API_BASE_URL}${endpoint}`,
                 data: formData,
-                headers,
+                headers: headers,
             });
 
             setData(response.data);
             setError(null);
+            console.log("Réponse de l'API :", response.data);
             return response.data;
         } catch (err) {
             setError(err);
+            console.error("Erreur lors du chargement du fichier :", err);
             throw err;
         } finally {
             setLoading(false);
         }
     };
 
-    const fetchUserFiles = async () => {
-        try {
-            const response = await fetchData("/userFiles", "GET", null, true);
-            return response;
-        } catch (err) {
-            console.error("Erreur lors de la récupération des fichiers :", err);
-            throw err;
-        }
-    };
-
-    return { data, error, loading, fetchData, uploadFile, fetchUserFiles };
+    return { data, error, loading, fetchData, uploadFile };
 }
