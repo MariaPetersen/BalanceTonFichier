@@ -44,6 +44,8 @@ export default function Recap() {
         return `${(size / 1024).toFixed(2)} ko`;
     };
 
+    console.log(files)
+
     return (
         <div className="recap-page">
             <img src="/logo.svg" alt="logo" />
@@ -75,6 +77,7 @@ export default function Recap() {
                 <button
                     className="generate-link-button"
                     onClick={handleGenerateLink}
+                    disabled={files.length === 0}
                 >
                     Générer un lien*
                 </button>
