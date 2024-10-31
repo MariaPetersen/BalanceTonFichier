@@ -32,7 +32,7 @@ Le projet utilise les technologies suivantes :
 
 L'architecture du projet est la suivante :
 
-```
+```ini
 BalanceTonFichier/
 ├── frontend/               # Application frontend en React
 ├── app/               # Serveur backend en ExpressJs
@@ -42,6 +42,7 @@ BalanceTonFichier/
 ├── .env.dist              # Fichiers de variables d'environnement exemple
 └── README.md             # Documentation du projet
 ```
+
 ## Frontend
 
 ## Technologies utilisées
@@ -52,7 +53,7 @@ BalanceTonFichier/
 
 ## Structure du projet
 
-```
+```ini
 frontend/
 ├── public/             # Fichiers statiques
 ├── src/                # Code source de l'application
@@ -69,7 +70,7 @@ frontend/
 ├── .env.dist           # Modèle du fichier de variables d'environnement
 ├── package.json        # Dépendances et scripts
 └── README.md           # Documentation
-````
+```
 
 ## Backend
 
@@ -84,14 +85,50 @@ git clone https://github.com/votre-utilisateur/balancetonfichier.git
 
 ## Lancement du projet
 
-```
+```sh
 make start
-````
-### Accès à l'application 
+```
+
+### Accès à l'application
+
 Une fois le projet lancé, l'application sera accessible à l'adresse suivante :
 
 Frontend : http://localhost:3001
 Backend : http://localhost:8090
+
+## Commandes Makefile
+
+Voici une liste des commandes disponibles dans le Makefile pour gérer le projet `balance_ton_fichier` :
+
+### Entrer dans les conteneurs
+
+- **Accéder au conteneur de la base de données**  
+  ```bash
+  make bash-database
+
+
+- **AAccéder au conteneur Express**  
+  ```bash
+  make bash-express
+
+
+- **Accéder au conteneur React**  
+  ```bash
+  make bash-react
+
+
+- **Démarrer le projet**  
+  ```bash
+  make start
+
+
+- **Arrêter le projet**  
+  ```bash
+  make end
+
+- **Nettoyer les conteneurs arrêtés**  
+  ```bash
+  make clean
 
 ## Développeurs
 
@@ -102,4 +139,5 @@ Le projet est maintenu par l'équipe suivante :
 - Maria PETERSEN
 
 ## Licence
+
 Ce projet est sous licence MIT. Veuillez consulter le fichier LICENSE pour plus de détails.
