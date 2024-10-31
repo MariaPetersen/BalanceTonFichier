@@ -30,9 +30,9 @@ export default function Error() {
             fill="#BB271A"
           />
         </svg>
-        <p className="errorPage__title2">Balance ton Erreur</p>
+        <p className="errorPage__title2">BalanceTonErreur</p>
         <h1 className="errorPage__title">404</h1>
-        <p>T'as fait une tetrachié de chemin pour rien coño,</p>
+        <p>T'as fait une tetrachié de chemin pour rien,</p>
         <p>retournes d'où tu viens ...</p>
         <Button
           label="Je retourne d'où je viens"
