@@ -77,10 +77,12 @@ export default function Recap() {
                 <div className="file-list">
                     {files.map((file, index) => (
                         <div className="file-item" key={index}>
-                            <span className="file-name">
-                                {file.user_file_name}
-                            </span>
-                            <span>{formatFileSize(file.file_size)}</span>
+                            <div className="wrap-file-name">
+                                <span className="file-name">
+                                    {file.user_file_name}
+                                </span>
+                                <span>{formatFileSize(file.file_size)}</span>
+                            </div>
                             <button
                                 className="remove-file-button"
                                 onClick={() => handleRemoveFile(file.id)}
