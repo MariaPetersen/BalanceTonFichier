@@ -6,7 +6,7 @@
 }
 
 .file-upload-container {
-    border: 2px solid #e3008c;
+    border: 2px solid #bb271a;
     padding: 1.5rem 2rem;
     border-radius: 21px;
     width: 463px;
@@ -35,6 +35,9 @@
     margin-top: 10px;
     max-height: 500px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .file-item {
@@ -48,10 +51,10 @@
 .remove-file-button {
     background: none;
     border: none;
-    color: black;
     font-size: 24px;
     cursor: pointer;
     margin-left: 10px;
+    color: #bb271a;
 }
 
 .generate-link-button {
@@ -68,10 +71,8 @@
 }
 
 .file-name {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
     max-width: 60%;
+    font-weight: 500;
 }
 
 .link-validity {
@@ -96,4 +97,24 @@
 
 .file-list::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.file-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.wrap-file-name {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    border: #e7e7e7 solid 1px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 8px 12px;
+}
+
+.recap-page .disabled {
+    background: #525252;
+    cursor: not-allowed;
 }

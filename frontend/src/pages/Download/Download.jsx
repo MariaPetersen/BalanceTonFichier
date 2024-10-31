@@ -1,30 +1,43 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./Download.css";
 import useApi from "../../hooks/useApi";
+import LogoutButton from "../../components/LogoutButton/LogoutButton"; // Importer le LogoutButton
 
 export default function Recap() {
     const navigate = useNavigate();
-    const {id} = useParams()
-    const { fetchData } = useApi()
-    const [link, setLink] = useState()
+    const { id } = useParams();
+    const { fetchData } = useApi();
+    const [link, setLink] = useState();
+    const [textToCopy, setTextToCopy] = useState("");
+    const [copySuccess, setCopySuccess] = useState(false);
 
     useEffect(() => {
         const fetchLink = async () => {
-            fetchData(`/shareLink/${id}`, "GET", {}, true).then((link) => {
-                console.log(link)
-                setLink(link)
-            })
-        }
-        fetchLink()
-    }, [])
+            const link = await fetchData(`/shareLink/${id}`, "GET", {}, true);
+            console.log(link);
+            setLink(link);
+            setTextToCopy(link.link);
+        };
+        fetchLink();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
     const returnToFiles = () => {
         navigate("/recap");
     };
 
+    const handleCopy = () => {
+        navigator.clipboard.writeText(textToCopy);
+        setCopySuccess(true);
+        setTimeout(() => {
+            setCopySuccess(false);
+        }, 2000);
+    };
+
     return (
         <div className="download-page">
+            <LogoutButton />
             <img src="/logo.svg" alt="logo" />
             <div className="download-container">
                 <div className="top-download">
@@ -39,16 +52,29 @@ export default function Recap() {
                     <div className="resume-download">
                         <div className="download-link-section">
                             <div>Lien de téléchargement</div>
-                            {link && <a href={link.link} target="__blank">
-                                {link.link}
-                            </a>}
+                            {link && (
+                                <a
+                                    href={link.link}
+                                    target="__blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {link.link}
+                                </a>
+                            )}
                         </div>
                         <div>
-                            <button>
-                                <i class="fa-regular fa-copy"></i>
+                            <button onClick={handleCopy}>
+                                <i className="fa-regular fa-copy"></i>
                             </button>
                         </div>
                     </div>
+                    {copySuccess && (
+                        <div className="resume-success">
+                            <div>
+                                Le texte a bien été copié dans le presse-papier
+                            </div>
+                        </div>
+                    )}
                     <button
                         className="generate-link-button other-button"
                         onClick={returnToFiles}

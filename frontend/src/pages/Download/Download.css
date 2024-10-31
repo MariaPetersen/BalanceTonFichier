@@ -14,7 +14,7 @@
 
 .download-container {
     margin-top: 2rem;
-    border: 2px solid #e3008c;
+    border: 2px solid #bb271a;
     padding: 1.5rem 2rem;
     border-radius: 21px;
     width: 463px;
@@ -69,4 +69,10 @@
 
 .other-button {
     margin-top: 4rem;
+}
+
+.resume-success {
+    color: green;
+    text-align: center;
+    font-size: 14px;
 }

@@ -13,3 +13,10 @@ bash-react:
 # To start project
 start:
 	docker-compose up --build
+
+# To end project
+end:
+	docker-compose down
+
+clean:
+	docker container prune
