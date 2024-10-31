@@ -59,8 +59,6 @@ export default function Recap() {
         }
     };
 
-    console.log(files);
-
     return (
         <div className="recap-page">
             <LogoutButton />
@@ -95,7 +93,11 @@ export default function Recap() {
                     ))}
                 </div>
                 <button
-                    className="generate-link-button"
+                    className={
+                        files.length === 0
+                            ? `generate-link-button disabled`
+                            : `generate-link-button`
+                    }
                     onClick={handleGenerateLink}
                     disabled={files.length === 0}
                 >

@@ -107,3 +107,8 @@
     justify-content: space-between;
     width: 100%;
 }
+
+.recap-page .disabled {
+    background: #525252;
+    cursor: not-allowed;
+}
