@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-
+import useApi from "../../hooks/useApi";
 export default function Home() {
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
+    const { loading, uploadFile } = useApi();
 
     const handleClick = () => {
         fileInputRef.current.click();
@@ -14,7 +15,16 @@ export default function Home() {
         const file = event.target.files[0];
         if (file) {
             console.log("Fichier sélectionné:", file.name, file);
+            handleFileUpload(file);
+        }
+    };
+
+    const handleFileUpload = async (file) => {
+        try {
+            await uploadFile("/file/upload", file, true);
             navigate("/recap");
+        } catch (error) {
+            console.error("Erreur lors de l'ajout d'un fichier :", error);
         }
     };
 
@@ -41,7 +51,7 @@ export default function Home() {
                 />
 
                 <p className="arrow-info-dropfile">
-                    <i class="fa-solid fa-arrow-up"></i>
+                    <i className="fa-solid fa-arrow-up"></i>
                 </p>
                 <p className="info-dropfile">
                     Cliquez ici pour déposer vos fichiers
