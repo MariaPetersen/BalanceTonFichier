@@ -44,8 +44,36 @@ BalanceTonFichier/
 ```
 ## Frontend
 
-- Le frontend est construit avec React.
-- Il permet aux utilisateurs de téléverser des fichiers via une interface utilisateur intuitive et créer un lien de téléchargement pour partager les fichiers.
+## Description
+
+Ce projet est la partie frontend de l'application **Balance Ton Fichier**, qui permet aux utilisateurs de gérer et partager des fichiers. L'application est construite avec React et utilise `react-router` pour la navigation.
+
+## Technologies utilisées
+
+- **React** : Bibliothèque JavaScript pour construire des interfaces utilisateur.
+- **react-router-dom** : Pour la gestion de la navigation dans l'application.
+- **Axios** : Pour effectuer des requêtes HTTP.
+
+## Structure du projet
+
+```
+frontend/
+├── public/             # Fichiers statiques
+├── src/                # Code source de l'application
+│   ├── components/     # Composants réutilisables
+│   ├── pages/          # Pages de l'application
+│   ├── hooks/          # Custom hooks
+│   ├── context/        # State global avec Context API
+│   ├── services/       # Appels API
+│   ├── styles/         # Fichiers de styles
+│   ├── assets/         # Images et autres assets
+│   ├── App.js          # Composant principal
+│   └── index.js        # Point d'entrée
+├── .env                # Variables d'environnement
+├── .env.dist           # Modèle du fichier de variables d'environnement
+├── package.json        # Dépendances et scripts
+└── README.md           # Documentation
+````
 
 ## Backend
 
