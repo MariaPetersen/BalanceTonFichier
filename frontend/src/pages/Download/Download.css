@@ -70,3 +70,9 @@
 .other-button {
     margin-top: 4rem;
 }
+
+.resume-success {
+    color: green;
+    text-align: center;
+    font-size: 14px;
+}
