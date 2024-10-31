@@ -44,10 +44,6 @@ BalanceTonFichier/
 ```
 ## Frontend
 
-## Description
-
-Ce projet est la partie frontend de l'application **Balance Ton Fichier**, qui permet aux utilisateurs de gérer et partager des fichiers. L'application est construite avec React et utilise `react-router` pour la navigation.
-
 ## Technologies utilisées
 
 - **React** : Bibliothèque JavaScript pour construire des interfaces utilisateur.
