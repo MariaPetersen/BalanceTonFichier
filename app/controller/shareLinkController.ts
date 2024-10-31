@@ -7,6 +7,7 @@ import { IUserToken } from "type/userToken";
 import archiver from "archiver";
 import { verifyAndFetchFiles, generateShareLink } from "utils/helper";
 import { constants } from "utils/constants";
+import unzipper from 'unzipper';
 
 export const shareLinkController = {
     createShareLink: (repositories: IRepository) => async (req: IAuthRequest, res: Response, next: NextFunction) => {
@@ -42,17 +43,24 @@ export const shareLinkController = {
                 res.status(403).json({ message: 'Link expired' });
                 return;
             }
-            res.setHeader('Content-Type', 'application/zip');
-            res.setHeader('Content-Disposition', 'attachment; filename="files.zip"');
-            const archive = archiver('zip', { zlib: { level: 9 } });
-            archive.pipe(res);
             const files = await fileRepository.getFilesByIds(filesIds)
             if (files.length === 0) {
                 res.status(404).json({ message: "No files found for download" });
             }
-            files.forEach((file: IFile) => {
-                archive.file(file.file_path, { name: file.user_file_name });
-            });
+            res.setHeader('Content-Type', 'application/zip');
+            res.setHeader('Content-Disposition', 'attachment; filename="files.zip"');
+
+            const archive = archiver('zip', { zlib: { level: 9 } });
+            archive.pipe(res);
+            for (const file of files) {
+                const filePath = file.file_path;
+                const directory = await unzipper.Open.file(filePath);
+                for (const entry of directory.files) {
+                        const entryStream = entry.stream();
+                        archive.append(entryStream, { name: entry.path });
+                    }
+               
+            }
             archive.finalize();
             archive.on('error', (err) => {
                 res.status(500).send({ error: err.message });
