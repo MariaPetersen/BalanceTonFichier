@@ -18,8 +18,11 @@ export default function Recap() {
     }, [files])
 
     useEffect(() => {
-        fetchFiles()
-    }, [])
+        const fetch = async () => {
+            await fetchFiles()
+        }
+        fetch()
+    }, [fetchFiles])
 
     const handleFileChange = async (event) => {
         const newFiles = Array.from(event.target.files);
@@ -31,9 +34,10 @@ export default function Recap() {
         fetchData(`/file/delete/${fileId}`, "DELETE", {}, true).then((response) => {fetchFiles()})
     };
 
-    const handleGenerateLink = () => {
-
-        navigate("/download");
+    const handleGenerateLink = async () => {
+        fetchData(`/shareLink/create`, "POST", {}, true).then((link) => {
+            navigate(`/download/${link.id}`);
+        })
     };
 
     const formatFileSize = (size) => {
