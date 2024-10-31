@@ -81,6 +81,7 @@
     margin-top: 5px;
 }
 
+<<<<<<< HEAD
 .file-list::-webkit-scrollbar {
     width: 6px;
 }
@@ -96,4 +97,10 @@
 
 .file-list::-webkit-scrollbar-thumb:hover {
     background: #555;
+=======
+.wrap-file-name {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+>>>>>>> 8c3aaec (feat/add formatage file size)
 }

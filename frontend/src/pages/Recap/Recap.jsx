@@ -20,7 +20,13 @@ export default function Recap() {
     };
 
     const formatFileSize = (size) => {
-        return `${(size / 1024).toFixed(2)} ko`;
+        if (size >= 1024 * 1024) {
+            return `${(size / 1024 / 1024).toFixed(2)} Mo`;
+        } else if (size >= 1024) {
+            return `${(size / 1024).toFixed(2)} Ko`;
+        } else {
+            return `${size} octets`;
+        }
     };
 
     return (
@@ -40,8 +46,10 @@ export default function Recap() {
                 <div className="file-list">
                     {files.map((file, index) => (
                         <div className="file-item" key={index}>
-                            <span className="file-name">{file.name}</span>
-                            <span>{formatFileSize(file.size)}</span>
+                            <div className="wrap-file-name">
+                                <span>{file.name}</span>
+                                <span>{formatFileSize(file.size)}</span>
+                            </div>
                             <button
                                 className="remove-file-button"
                                 onClick={() => handleRemoveFile(index)}
