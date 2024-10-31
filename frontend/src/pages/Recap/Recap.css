@@ -1,6 +1,75 @@
-.recap {
+.recap-page {
     display: flex;
-    margin-top: 8rem;
     flex-direction: column;
+    margin-top: 8rem;
+    align-items: center;
+}
+
+.file-upload-container {
+    border: 2px solid #e3008c;
+    padding: 1.5rem 2rem;
+    border-radius: 21px;
+    width: 463px;
+    margin-top: 4rem;
+}
+
+.recap-page h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.file-dropzone {
+    display: block;
+    border: 1px dashed #a8c3ff;
+    background-color: #f4f8ff;
+    color: #1e62fe;
+    padding: 10px;
+    padding-left: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.file-list {
+    margin-top: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.remove-file-button {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.generate-link-button {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 16px 10px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.link-validity {
+    font-size: 12px;
+    color: gray;
     text-align: center;
+    margin-top: 5px;
 }
