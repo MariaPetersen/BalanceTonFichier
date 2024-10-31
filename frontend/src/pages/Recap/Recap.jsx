@@ -6,45 +6,59 @@ import useApi from "../../hooks/useApi";
 export default function Recap() {
     const [files, setFiles] = useState([]);
     const navigate = useNavigate();
-    const { fetchData, uploadFile } = useApi()
+    const { fetchData, uploadFile } = useApi();
 
     const fetchFiles = useCallback(async () => {
-        const response = await fetchData("/file/userFiles", "GET", {}, true)
-        setFiles(response)
-    }, [])
+        const response = await fetchData("/file/userFiles", "GET", {}, true);
+        setFiles(response);
+    }, []);
 
-    const uploadNewFile = useCallback(async (file) => {
-        uploadFile("/file/upload", file, true).then((response) => { fetchFiles()})
-    }, [files])
+    const uploadNewFile = useCallback(
+        async (file) => {
+            uploadFile("/file/upload", file, true).then((response) => {
+                fetchFiles();
+            });
+        },
+        [files]
+    );
 
     useEffect(() => {
         const fetch = async () => {
-            await fetchFiles()
-        }
-        fetch()
-    }, [fetchFiles])
+            await fetchFiles();
+        };
+        fetch();
+    }, [fetchFiles]);
 
     const handleFileChange = async (event) => {
         const newFiles = Array.from(event.target.files);
-        newFiles.forEach(file => uploadNewFile(file))
-       
+        newFiles.forEach((file) => uploadNewFile(file));
     };
 
     const handleRemoveFile = async (fileId) => {
-        fetchData(`/file/delete/${fileId}`, "DELETE", {}, true).then((response) => {fetchFiles()})
+        fetchData(`/file/delete/${fileId}`, "DELETE", {}, true).then(
+            (response) => {
+                fetchFiles();
+            }
+        );
     };
 
     const handleGenerateLink = async () => {
         fetchData(`/shareLink/create`, "POST", {}, true).then((link) => {
             navigate(`/download/${link.id}`);
-        })
+        });
     };
 
     const formatFileSize = (size) => {
-        return `${(size / 1024).toFixed(2)} ko`;
+        if (size >= 1024 * 1024) {
+            return `${(size / 1024 / 1024).toFixed(2)} Mo`;
+        } else if (size >= 1024) {
+            return `${(size / 1024).toFixed(2)} Ko`;
+        } else {
+            return `${size} octets`;
+        }
     };
 
-    console.log(files)
+    console.log(files);
 
     return (
         <div className="recap-page">
@@ -63,7 +77,9 @@ export default function Recap() {
                 <div className="file-list">
                     {files.map((file, index) => (
                         <div className="file-item" key={index}>
-                            <span className="file-name">{file.user_file_name}</span>
+                            <span className="file-name">
+                                {file.user_file_name}
+                            </span>
                             <span>{formatFileSize(file.file_size)}</span>
                             <button
                                 className="remove-file-button"
