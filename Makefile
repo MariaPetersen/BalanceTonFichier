@@ -12,6 +12,7 @@ bash-react:
 
 # To start project
 start:
+	mkdir app/temp app/uploads
 	docker-compose up --build
 
 # To end project
