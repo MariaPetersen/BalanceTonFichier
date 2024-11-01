@@ -80,10 +80,13 @@ frontend/
 ## Installation
 
 ```bash
-git clone https://github.com/votre-utilisateur/balancetonfichier.git
+git clone git@github.com:MariaPetersen/BalanceTonFichier.git
 ```
 
 ## Lancement du projet
+```sh
+cd BalanceTonFichier
+```
 
 ```sh
 make start

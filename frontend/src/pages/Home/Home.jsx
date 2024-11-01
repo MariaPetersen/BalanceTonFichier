@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
 export default function Home() {
@@ -58,6 +58,9 @@ export default function Home() {
                 <p className="info-dropfile">
                     Cliquez ici pour déposer vos fichiers
                 </p>
+                <div className="pitie">
+                    <Link to="/recap">Voir mon bazar</Link>
+                </div>
             </div>
         </div>
     );
