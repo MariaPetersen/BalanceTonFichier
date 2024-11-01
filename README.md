@@ -84,6 +84,9 @@ git clone git@github.com:MariaPetersen/BalanceTonFichier.git
 ```
 
 ## Lancement du projet
+```sh
+cd BalanceTonFichier
+```
 
 ```sh
 make start
