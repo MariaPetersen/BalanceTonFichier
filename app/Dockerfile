@@ -8,4 +8,6 @@ RUN npm install
 
 COPY . .
 
+RUN mkdir -p temp uploads 
+
 CMD ["npm", "run", "dev"]
